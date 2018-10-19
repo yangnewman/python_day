@@ -60,22 +60,22 @@
   <main>
     <div class="infosbox">
       {% load static %}
-      {% for article in articles %}
+      {% for page in pages %}
       <div class="newsview">
-        <h3 class="news_title">{{ article.art_title }}</h3>
+        <h3 class="news_title">{{ page.art_title }}</h3>
         <div class="bloginfo">
           <ul>
             <li class="author">作者：<a href="/">孟阳</a></li>
-            <li class="lmname"><a href="/">{{ article.art_tags }}</a></li>
-            <li class="timer">时间：{{ article.update_time|date:'Y-m-d H:i:s' }}</li>
+            <li class="lmname"><a href="/">{{ page.art_tags }}</a></li>
+            <li class="timer">时间：{{ page.update_time|date:'Y-m-d H:i:s' }}</li>
             <li class="view">4567人已阅读</li>
           </ul>
         </div>
         <div class="tags"><a href="/" target="_blank">个人博客</a> &nbsp; <a href="/" target="_blank">小世界</a></div>
         <div class="news_about"><strong>简介</strong>个人博客，用来做什么？我用来存放关于Web框架相关的知识的平台</div>
-        <div class="news_img"><img src="/media/{{ article.art_img }}"></div>
+        <div class="news_img"><img src="/media/{{ page.art_img }}"></div>
         <div class="news_con"><br>
-            {{ article.art_content|safe }}
+            {{ page.art_content|safe }}
       &nbsp; </div>
       </div>
       {% endfor %}
@@ -83,8 +83,14 @@
         <p class="diggit"><a href="JavaScript:makeRequest('/e/public/digg/?classid=3&amp;id=19&amp;dotop=1&amp;doajax=1&amp;ajaxarea=diggnum','EchoReturnedText','GET','');"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>
       </div>
       <div class="nextinfo">
-        <p>上一篇：<a href="/news/life/2018-03-13/804.html">作为一个设计师,如果遭到质疑你是否能恪守自己的原则?</a></p>
-        <p>下一篇：<a href="/news/life/">返回列表</a></p>
+
+        <p>{{ pages_all }}</p>
+        {% if pages.has_previous %}
+        <p>上一篇：<a href="{% url 'home:info' %}?page={{ pages.previous_page_number }}">{{ pages_previous.0.art_title }}</a></p>
+        {% endif %}
+        {% if pages.has_next %}
+        <p>下一篇：<a href="{% url 'home:info' %}?page={{ pages.next_page_number }}">{{ pages_next.0.art_title }}</a></p>
+        {% endif %}
       </div>
 {#      <div class="news_pl">#}
 {#        <h2>文章评论</h2>#}
