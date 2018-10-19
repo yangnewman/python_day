@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %}
+
+
+{% block meta %}
+    <meta charset="UTF-8">
+    <meta name="keywords" content="YangNewMan Blogs, 样纽曼个人博客" />
+    <meta name="description" content="样纽曼个人博客，主要用于学习和分享知识，如有不足请多海涵" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+
+{% block Css %}
+    {% load static %}
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link href="/static/css/m.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block Js %}
+    <script src="/static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/js/comm.js" type="text/javascript" ></script>
+{% endblock %}
+
+
+{% block header %}
+    <header class="header-navigation" id="header">
+      <nav><div class="logo"><a href="/">样纽曼个人博客</a></div>
+        <h2 id="mnavh"><span class="navicon"></span></h2>
+        <ul id="starlist">
+          <li><a href="{% url 'home:index' %}">网站首页</a></li>
+          <li><a href="{% url 'home:about' %}">关于我</a></li>
+          <li><a href="{% url 'home:info' %}">内容页</a></li>
+        </ul>
+      </nav>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+
+{% endblock %}
+
+
+{% block foot %}
+    <footer>
+      <p>Design by <a href="" target="_blank">YangNewMan Blogs</a> <a href="/">如有雷同纯属巧合</a></p>
+    </footer>
+    <a href="#" class="cd-top">Top</a>
+{% endblock %}
+
