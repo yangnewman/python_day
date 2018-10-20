@@ -1,0 +1,65 @@
+1、ftp搭建
+	关闭防火墙和selinux
+	setenforce 0
+	依赖  gcc和openssl-devel和perl
+	0、yum install -y gcc openssl-devel perl
+	1、去pureftp官网	
+		download==》releases==》pure-ftpd-1.0.41.tar.gz
+	2、下载
+		wget https://download.pureftpd.org/pub/pure-ftpd/releases/pure-ftpd-1.0.41.tar.gz
+	3、解压
+		tar -zxvf 文件名
+	4、配置
+		./configure                    #进行配置  -h 查看配置参数
+		--prefix=/usr/local/pureftpd   #安装目录
+		--without-inetd                #不使用ineted 超级服务器管理
+		--with-altlog                  #采用alt日志
+		--with-puredb	               #采用puredb来存储ftp虚拟用户信息
+		--with-throttling              #开启带宽控制
+		 --with-tls                    #开启ftps支持
+		 
+		 ./configure --prefix=/usr/local/pureftpd --without-inetd --with-altlog --with-puredb --with-throttling --with-tls
+
+		 echo $?  如果是0说明上一步成功，其它为错误
+		 
+		 make && make install
+		 
+		 
+	5、修改配置文件
+		cd configuration-file/
+		mkdir /usr/local/pureftpd/etc   创建目录
+		cp pure-ftpd.conf  /usr/local/pureftpd/etc/
+		修改：vi /usr/local/pureftpd/etc/pure-ftpd.conf 如下
+			在文件最后添加如下两行
+			PureDB		/usr/local/pureftpd/etc/pureftpd.pdb
+			PIDFile 	/var/run/pure-ftpd.pid
+	6、拷贝控制文件
+		cp pure-config.pl /usr/local/pureftpd/sbin/
+		chmod 755 /usr/local/pureftpd/sbin/pure-config.pl
+	7、启动服务
+		cd /usr/local/pureftpd
+		./sbin/pure-config.pl  ./etc/pure-ftpd.conf
+		检查：ps -ef | grep ftp
+		
+	8、添加管理用户
+		useradd  test
+		mkdir -p /var/www/html/
+		chown -R test:test /var/www/html/
+		./bin/pure-pw useradd ftp_user1 -u test -d /var/www/html
+		ftp_user1：ftp登录用户名
+		-u：指定系统中存在的用户
+		-d：指定访问的目录
+	9、创建虚拟的用户数据库
+		./bin/pure-pw mkdb
+		
+		/usr/local/pureftpd/bin/pure-pw list	        #查看用户列表
+		/usr/local/pureftpd/bin/pure-pw userdel  用户名	#删除用户
+	10、通过ftp链接工具(FileZilla)测试
+	
+	
+	
+	
+	
+	
+	
+	

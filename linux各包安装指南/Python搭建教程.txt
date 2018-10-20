@@ -1,0 +1,26 @@
+Python搭建教程
+1、下载源码
+	Gzipped source tarball    这种后缀是 .tar.gz
+	yum install -y zlib*  (必须的哥们)
+	tar -zxvf Python-3.6.4.tgz
+	cd Python-3.6.4
+	
+	编译
+	./configure --prefix=/usr/local/python3 --enable-optimizations
+	
+	（必须的）
+	vi Modules/Setup
+		将第366行的那个#号去掉
+		zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
+		
+	make && make install
+2、链接过来指令包
+	ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+	终端输入python3,即可进入python3的终端模式
+3、pip3设置
+	find / -name pip3
+	ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+	pip3 -V   查看pip3版本信息
+	
+	升级pip
+	pip3 install --upgrade pip
