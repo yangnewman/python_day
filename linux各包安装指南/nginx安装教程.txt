@@ -1,0 +1,49 @@
+nginx安装
+1、关闭防火墙和selinux
+2、安装依赖软件
+	yum install -y gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel pcre pcre-devel
+3、tar -zxvf nginx-1.11.5.tar.gz
+4、创建www用户，不允许以www用户登录系统
+	useradd www -s /sbin/nologin
+5、./configure --prefix=/usr/local/nginx --without-http_memcached_module --user=www --group=www   --with-http_stub_status_module --with-http_ssl_module
+6、make && make install
+7、cp nginx /etc/init.d/
+8、开启服务
+	service nginx start
+9、设置开机启动
+	chkconfig nginx on
+	chkconfig --list      查看是否开机启动
+10、查看网络和端口使用情况
+	netstat -lnp | grep nginx
+	nginx默认监听的端口为80端口
+
+
+
+虚拟主机配置步骤
+（1）修改nginx配置文件
+	vi /usr/local/nginx/conf/nginx.conf
+	在第116行加一行代码
+	include vhost/*.conf;
+（2）新建一个vhost文件夹
+	mkdir /usr/local/nginx/conf/vhost
+（3）来到vhost下，新建一个虚拟主机配置文件
+	vi /usr/local/nginx/conf/vhost/www.lala.com.conf
+	server
+	{
+	    server_name www.lala.com;
+	    root html/lala;
+	    index index.html;
+	}
+
+	[说明]：
+	server_name : 域名
+	root : 网站的根目录
+	index : 网站的默认首页
+（4）新建虚拟主机根目录
+	mkdir /usr/local/nginx/html/lala
+	vi /usr/local/nginx/html/lala/index.html
+
+	service nginx restart   重启服务
+（5）编辑本机的hosts文件
+	C:\Windows\System32\drivers\etc\hosts
+	10.9.151.154  www.lala.com

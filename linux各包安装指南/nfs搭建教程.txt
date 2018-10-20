@@ -1,0 +1,26 @@
+nfs搭建教程
+服务器上操作
+	关闭防火墙   service iptables stop
+	关闭selinux  setenforce 0
+	1、yum install -y nfs-utils
+	2、编辑配置文件
+		vi /etc/exports
+		/nfstest         10.0.144.0/24(rw,sync)
+		要共享的目录     网段
+	3、创建目录
+		mkdir /nfstest
+		vi /nfstest/lala.txt
+	4、启动服务
+		nfs是基于rpc协议的，所以首先启动rpc
+		service rpcbind start
+		service nfs start
+客户端上操作
+	1、yum install -y nfs-utils
+	2、查看对应ip地址上面共享的目录
+		showmount -e 10.0.144.156
+	3、挂载nfs
+		mount -t nfs 10.0.144.156:/nfstest /mnt/usb
+		mount -t nfs 10.7.181.94:/nfstest /mnt/usb
+	4、配置开机挂载
+		vi /etc/fstab
+		10.0.142.34:/test/   /root/nfs   nfs   defaults  0   0
