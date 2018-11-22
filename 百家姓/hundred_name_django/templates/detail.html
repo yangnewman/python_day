@@ -91,7 +91,7 @@
 			<div id="main-container-image">
 
                 <div class="wrapper-text-descriptiondetail">
-
+                    {% if name_info.name %}
                     <div class="wrapper-view" style="display: block">
                     	<div class="icon-view"><h1>{{ name_info.name }}</h1></div>
                     </div>
@@ -125,7 +125,9 @@
                     	    {% endfor %}
                         </div>
                     </div>
-
+                    {% else %}
+                        <h2>抱歉，没有找到您要的姓名/(ㄒoㄒ)/~~</h2>
+                    {% endif %}
                 </div>
             </div>
         </div>
