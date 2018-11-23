@@ -5,6 +5,7 @@ import requests
 from lxml import etree
 from threading import Thread
 
+
 def get_one_page(url):
 
     headers = {
@@ -132,17 +133,16 @@ def fen_url():
     url_list = [big_list[i:i + n] for i in range(0, len(big_list), n)]
     return url_list
 
+
 def main(urls):
     # url = 'http://zhao.resgain.net/name_list.html'
     # urls = db_open()
     for url in urls:
-        # print(url)
+        # 跑完分页
         for i in range(1, 11):
-            # if not url[0]:
             if i == 1:
                 print(url[0])
                 html = get_one_page(str(url[0]))
-                # creat_write_db(urls)
                 items = parse_with_xpath(html, str(url[0]))
                 num = write_db(items)
             else:
@@ -157,7 +157,7 @@ def main(urls):
                 num = write_db(items)
 
 
-if __name__ == '__main__':
+def thread_start():
     urls_list = fen_url()
     print(len(urls_list))
     # 线程组
@@ -171,6 +171,10 @@ if __name__ == '__main__':
     # 先执行完所有线程再执行主进程
     for t in threads:
         t.join()
-    print('sucess')
+    print('success')
+
+
+if __name__ == '__main__':
+    thread_start()
 
 
